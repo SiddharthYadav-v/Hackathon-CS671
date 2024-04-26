@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader, Dataset, TensorDataset
+from torch.utils.data import DataLoader
 
 def variance_schedule(T, s=0.008, max_beta=0.999):
     t = np.arange(T + 1)
@@ -29,10 +29,10 @@ def prepare_batch(X):
         "time": t,
     }, noise
 
-def prepare_dataset(dataset, batch_size=64, shuffle=False):
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
-    mapped_loader = (
-        (prepare_batch(batch) for batch in dataloader)
-    )
+# def prepare_dataset(dataset, batch_size=64, shuffle=False):
+#     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, drop_last=True)
+#     mapped_loader = (
+#         (prepare_batch(batch) for batch in dataloader)
+#     )
 
-    return mapped_loader
+#     return mapped_loader
