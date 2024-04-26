@@ -25,8 +25,8 @@ for epoch in range(epochs):
         time = dict_["time"].to(device)
 
         output = model(X_noisy, time).squeeze(1).unsqueeze(-1)
-        noise.to(device)
-
+        noise = noise.to(device)
+        
         optimizer.zero_grad()
         loss = criterion(output, noise)
         loss.backward()
@@ -34,6 +34,8 @@ for epoch in range(epochs):
     
         running_loss += loss.item()
         if i % 200 == 199:
-            print(f'Epoch {epoch+1}/{i}, loss: {running_loss}')
+            print(f'[{epoch + 1}, {i + 1}] loss: {running_loss / 200}')
             running_loss = 0.0
             
+PATH = './Diffusion_Model.pth'
+torch.save(model.state_dict(), PATH)
